@@ -3,13 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "greenscreen-app": {
+    "greenscreen-project": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:application": {
-          "strict": true
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -17,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/greenscreen-app",
+            "outputPath": "dist/greenscreen-project",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -50,13 +46,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ]
             }
@@ -65,18 +61,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "greenscreen-app:build"
+            "browserTarget": "greenscreen-project:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "greenscreen-app:build:production"
+              "browserTarget": "greenscreen-project:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "greenscreen-app:build"
+            "browserTarget": "greenscreen-project:build"
           }
         },
         "test": {
@@ -113,16 +109,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "greenscreen-app:serve"
+            "devServerTarget": "greenscreen-project:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "greenscreen-app:serve:production"
+              "devServerTarget": "greenscreen-project:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "greenscreen-app"
+  "defaultProject": "greenscreen-project"
 }
