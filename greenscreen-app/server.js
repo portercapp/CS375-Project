@@ -1,14 +1,15 @@
 const express = require('express');
 const app = express();
 
-
 const port = 3000;
 const hostname = "localhost";
 
+app.use(express.json());
 app.use(express.static('src'));
 
-app.get('*', (req, res) => {
-	res.sendFile("src/index.html");
+//We can use this for testing when we implement the requests on the Frontend
+app.get('/test', (req, res) => {
+	res.send("Test Message");
 });
 
 app.listen(port, hostname, () => {
