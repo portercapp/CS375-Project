@@ -8,7 +8,23 @@
     <title>Upload Files</title>
   </head>
 
-  <body>
+  <body style="background-color:rgb(194, 235, 189);">
+    <h1>
+      <center>Greenscreen App</center>
+    </h1>
+    <p>
+      <center>
+        Welcome to the Greenscreen App! Please upload a photo of yourself in front 
+        of a single color background, and either choose from our provided backgrounds 
+        or upload any background you would like to be placed into!
+      </center>
+    </p>
+    <h3>
+      Step One!
+    </h3>
+    <h4>
+      Choose a photo of youself, or a photo you would like to have placed in front of your background.
+    </h4>
     <form method="POST" action="/upload-profile-pic" enctype="multipart/form-data">
       <div>
         <label>Select your profile picture:</label>
@@ -18,5 +34,31 @@
         <input type="submit" name="btn_upload_profile_pic" value="Upload" />
     </div>
     </form>
+    <h3>
+      Step Two!
+    </h3>
+    <h4>
+      Choose one of our backgrounds, or upload a background of your own.
+    </h4>
+
+    <form method="POST" action="/upload-background-pic" enctype="multipart/form-data">
+      <div>
+        <label>Select your own background:</label>
+        <input type="file" name="profile_pic" />
+      </div>
+      <div>
+        <input type="submit" name="btn_upload_background_pic" value="Upload" />
+      </div>
+    </form>
+
+    <img src="sloth1.jpg" alt="sloth1" width="240" height="135">
+    <input type="radio" id="sloth1">
+    <label for="sloth1">Hanging Out</label><br>
+    <img src="sloth2.jpg" alt="sloth2" width="240" height="135">
+    <input type="radio" id="sloth2">
+    <label for="sloth2">King Kong Sloth</label><br>
+    <img src="sloth3.jpg" alt="sloth3" width="240" height="135">
+    <input type="radio" id="sloth3">
+    <label for="sloth3">Who Me?</label><br>
   </body>
 </html>
