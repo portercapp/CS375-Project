@@ -8,6 +8,7 @@ const helpers = require('./helpers');
 const app = express();
 
 app.use(express.static("public_html"));
+app.use(express.static("uploads"));
 
 const port = 3000;
 const hostname = "localhost";
@@ -44,8 +45,9 @@ app.post('/upload-profile-pic', (req, res) => {
             return res.send(err);
         }
 
+       
         // Display uploaded image for user validation
-        res.send(`You have uploaded this image: <hr/><img src="${req.file.path}" width="500"><hr /><a href="./">Upload another image</a>`);
+        res.send(`You have uploaded this image: <hr/><img src="${req.file.filename}" width="500"><hr /><a href="./">Upload another image</a>`);
     });
 });
 
