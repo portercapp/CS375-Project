@@ -47,17 +47,14 @@ app.post('/upload-profile-pic', (req, res) => {
 
        
         // Display uploaded image for user validation
-        res.send(`You have uploaded this image: <hr/><img src="${req.file.filename}" width="500"><hr /><a href="./">Upload another image</a>`);
+        //res.send(`You have uploaded this image: <hr/><img src="${req.file.filename}" width="500"><hr /><a href="./">Upload another image</a>`);
     });
 });
 
 app.post('/upload-background-pic', (req, res) => {
-    // 'profile_pic' is the name of our file input field in the HTML form
     let upload = multer({ storage: storage, fileFilter: helpers.imageFilter }).single('background_pic');
 
     upload(req, res, function(err) {
-        // req.file contains information of uploaded file
-        // req.body contains information of text fields, if there were any
 
         if (req.fileValidationError) {
             return res.send(req.fileValidationError);
@@ -72,8 +69,7 @@ app.post('/upload-background-pic', (req, res) => {
             return res.send(err);
         }
 
-       
-        // Display uploaded image for user validation
+        //Example page to show the upload succeded
         res.send(`You have uploaded this image: <hr/><img src="${req.file.filename}" width="500"><hr /><a href="./">Upload another image</a>`);
     });
 });
