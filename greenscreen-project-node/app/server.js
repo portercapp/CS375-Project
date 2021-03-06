@@ -8,6 +8,7 @@ const helpers = require('./helpers');
 const app = express();
 
 app.use(express.static("public_html"));
+app.use(express.static("uploads"));
 
 const port = 3000;
 const hostname = "localhost";
@@ -44,8 +45,32 @@ app.post('/upload-profile-pic', (req, res) => {
             return res.send(err);
         }
 
+       
         // Display uploaded image for user validation
-        res.send(`You have uploaded this image: <hr/><img src="${req.file.path}" width="500"><hr /><a href="./">Upload another image</a>`);
+        //res.send(`You have uploaded this image: <hr/><img src="${req.file.filename}" width="500"><hr /><a href="./">Upload another image</a>`);
+    });
+});
+
+app.post('/upload-background-pic', (req, res) => {
+    let upload = multer({ storage: storage, fileFilter: helpers.imageFilter }).single('background_pic');
+
+    upload(req, res, function(err) {
+
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        else if (!req.file) {
+            return res.send('Please select an image to upload');
+        }
+        else if (err instanceof multer.MulterError) {
+            return res.send(err);
+        }
+        else if (err) {
+            return res.send(err);
+        }
+
+        //Example page to show the upload succeded
+        res.send(`You have uploaded this image: <hr/><img src="${req.file.filename}" width="500"><hr /><a href="./">Upload another image</a>`);
     });
 });
 
