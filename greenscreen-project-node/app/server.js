@@ -24,55 +24,43 @@ const storage = multer.diskStorage({
     }
 });
 
-app.post('/upload-profile-pic', (req, res) => {
+app.post('/upload-pictures', (req, res) => {
     // 'profile_pic' is the name of our file input field in the HTML form
-    let upload = multer({ storage: storage, fileFilter: helpers.imageFilter }).single('profile_pic');
+    let upload = multer({ storage: storage, fileFilter: helpers.imageFilter })
+    .fields([
+            { name: 'profile_pic', maxCount: 1},
+            { name: 'background_pic', maxCount: 1},
+        ]);
 
     upload(req, res, function(err) {
-        // req.file contains information of uploaded file
-        // req.body contains information of text fields, if there were any
+        // req.files is an array that contains information of uploaded files
+        // req.body contains information of text fields/radio buttons, if there were any
 
         if (req.fileValidationError) {
             return res.send(req.fileValidationError);
         }
-        else if (!req.file) {
-            return res.send('Please select an image to upload');
+        else if (!req.files['profile_pic']) {
+            //No profile picture was selected
+            return res.send('Please select a profile picture to upload');
         }
-        else if (err instanceof multer.MulterError) {
-            return res.send(err);
+        else if(!req.files['background_pic']){
+            //No uploaded background - CHECK if a radio button was ticked
+            if (req.body['bg-radio'] !== undefined) {
+                res.send(`Selected ${req.body['bg-radio']}`);
+            }else{
+                res.send("Upload a background or select a template background.")
+            }
         }
-        else if (err) {
+        else if (err instanceof multer.MulterError || err) {
             return res.send(err);
         }
 
        
         // Display uploaded image for user validation
-        res.send(`You have uploaded this image: <hr/><img src="${req.file.filename}" width="500"><hr /><a href="./">Upload another image</a>`);
+        //res.send(`You have uploaded this image: <hr/><img src="${req.file.filename}" width="500"><hr /><a href="./">Upload another image</a>`);
     });
 });
 
-app.post('/upload-background-pic', (req, res) => {
-    let upload = multer({ storage: storage, fileFilter: helpers.imageFilter }).single('background_pic');
-
-    upload(req, res, function(err) {
-
-        if (req.fileValidationError) {
-            return res.send(req.fileValidationError);
-        }
-        else if (!req.file) {
-            return res.send('Please select an image to upload');
-        }
-        else if (err instanceof multer.MulterError) {
-            return res.send(err);
-        }
-        else if (err) {
-            return res.send(err);
-        }
-
-        //Example page to show the upload succeded
-        res.send(`You have uploaded this image: <hr/><img src="${req.file.filename}" width="500"><hr /><a href="./">Upload another image</a>`);
-    });
-});
 
 app.listen(port, hostname, () => {
     console.log(`Listening at: http://${hostname}:${port}`);

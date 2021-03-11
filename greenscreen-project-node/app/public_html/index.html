@@ -20,10 +20,15 @@
       </center>
     </p>
     
-    <form method="POST" action="/upload-profile-pic" enctype="multipart/form-data">
+    <form method="POST" action="/upload-pictures" enctype="multipart/form-data">
       <div>
-        <label>Select your profile picture and background: </label>
+        <label>Select your profile picture: </label>
         <input type="file" name="profile_pic" />
+      </div>
+
+      <div>
+        <label>[Optional] Select your own background: </label>
+        <input type="file" name="background_pic" />
       </div>
       
       <p>Premade Backgrounds: </p>
