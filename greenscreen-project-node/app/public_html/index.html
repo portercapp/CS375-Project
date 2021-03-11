@@ -20,21 +20,26 @@
       </center>
     </p>
     
-    <form method="POST" action="/upload-profile-pic" enctype="multipart/form-data">
+    <form method="POST" action="/upload-pictures" enctype="multipart/form-data">
       <div>
-        <label>Select your profile picture and background: </label>
+        <label>Select your profile picture: </label>
         <input type="file" name="profile_pic" />
+      </div>
+
+      <div>
+        <label>[Optional] Select your own background: </label>
+        <input type="file" name="background_pic" />
       </div>
       
       <p>Premade Backgrounds: </p>
 
-      <img src="sloth1.jpg" alt="sloth1" width="240" height="135">
+      <img src="bg1.jpg" alt="sloth1" width="240" height="135">
       <input type="radio" id="sloth1" name="bg-radio" value="bg1">
       <label for="sloth1">Hanging Out</label><br>
-      <img src="sloth2.jpg" alt="sloth2" width="240" height="135">
+      <img src="bg2.jpg" alt="sloth2" width="240" height="135">
       <input type="radio" id="sloth2" name="bg-radio" value="bg2">
       <label for="sloth2">King Kong Sloth</label><br>
-      <img src="sloth3.jpg" alt="sloth3" width="240" height="135">
+      <img src="bg3.jpg" alt="sloth3" width="240" height="135">
       <input type="radio" id="sloth3" name="bg-radio" value="bg3">
       <label for="sloth3">Who Me?</label><br>
 
