@@ -48,9 +48,15 @@ app.post('/upload-pictures', (req, res) => {
             //No uploaded background - CHECK if a radio button was ticked
             if (req.body['bg-radio'] !== undefined) {
                 res.send(
-                    `You have uploaded this profile image: <hr/><canvas id="c1"></canvas><hr /><a href="./">Upload another image</a>
+                    `<button type="button" id="green">Click Here Twice</button><br>
+		    You have uploaded this profile image: <hr/><canvas id="c1"></canvas><hr /><a href="./">Upload another image</a>
                     <br/>This is your final image: <hr/><canvas id="c2"></canvas><hr /><a href="./">Upload another image</a>
 		    <script type="text/javascript">
+			let button = document.getElementById("green");
+			button.addEventListener('click', function() {
+			  processor.doLoad();
+			});
+
 			let processor = {
 			timerCallback: function() {	
 			this.computeFrame();
@@ -94,7 +100,6 @@ app.post('/upload-pictures', (req, res) => {
 			    return;
 			  }  
 			};
-			processor.doLoad();
 		    </script>`
                     );
             }else{
@@ -107,13 +112,19 @@ app.post('/upload-pictures', (req, res) => {
             //Both images were uploaded successfully
             //Display uploaded image for user validation
             res.send(
-                `You have uploaded this profile image: <hr/><canvas id="c1"></canvas><hr /><a href="./">Upload another image</a>
+                `<button type="button" id="green">Click Here Twice</button><br>
+		 You have uploaded this profile image: <hr/><canvas id="c1"></canvas><hr /><a href="./">Upload another image</a>
                  <br/>This is your final image: <canvas id="c2"></canvas><hr /><a href="./">Upload another image</a>
 		    <script type="text/javascript">
+			let button = document.getElementById("green");
+			button.addEventListener('click', function() {
+			  processor.doLoad();
+			});
+
 			let processor = {
-			timerCallback: function() {
-    			this.computeFrame();
-    			let self = this;
+			timerCallback: function() {	
+			this.computeFrame();
+			let self = this;
     			setTimeout(function() {
       			  self.timerCallback();
       			}, 0);
@@ -132,33 +143,27 @@ app.post('/upload-pictures', (req, res) => {
 			  this.c1.width = this.green.naturalWidth;
 			  this.c1.height = this.green.naturalHeight;
 			  let self = this;
-			  
  			  self.width = self.green.naturalWidth;
 			  self.height = self.green.naturalHeight;
       			  self.timerCallback();
-
  			},
 			computeFrame: function() {
 			  this.ctx1.drawImage(this.green, this.green.naturalWidth/2 - this.width/2, this.green.naturalHeight/2 - this.height/2, this.width, this.height);
 			  let frame = this.ctx1.getImageData(this.green.naturalWidth/2 - this.width/2, this.green.naturalHeight/2 - this.height/2, this.width, this.height);
 			  let l = frame.data.length / 4;
-    
 			  for (let i = 0; i < l; i++) {
 			    let r = frame.data[i * 4 + 0];
 			    let g = frame.data[i * 4 + 1];
 			    let b = frame.data[i * 4 + 2];
 			    if (g > 50 && r < 50 && b < 50)
 			      frame.data[i * 4 + 3] = 0;
-			    }
-
+			  }
 			    let canvas = document.getElementById("c2");
 			    canvas.style.backgroundImage = "url('${req.files['background_pic'][0].filename}')";
 			    this.ctx2.putImageData(frame, this.c2.width/2 - this.width/2, this.c2.height/2 - this.height/2);
 			    return;
-			  }
+			  }  
 			};
-
-			processor.doLoad();
 		    </script>`
             ); //The [0] is required to access the file attributes such as name, path, etc.
         }
