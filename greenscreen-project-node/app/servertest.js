@@ -9,6 +9,7 @@ const app = express();
 
 app.use(express.static("public_html"));
 app.use(express.static("uploads"));
+app.use(express.static("backgrounds"));
 
 const port = 3000;
 const hostname = "localhost";
@@ -22,6 +23,10 @@ const storage = multer.diskStorage({
     filename: function(req, file, cb) {
         cb(null, file.fieldname + path.extname(file.originalname));
     }
+});
+
+app.get('/get-backgrounds', (req, res) => {
+	// ...
 });
 
 app.post('/upload-pictures', (req, res) => {
