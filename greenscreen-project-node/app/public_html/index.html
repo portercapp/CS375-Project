@@ -46,8 +46,6 @@
     <script>
       let backgroundsEl = document.getElementById('sample-backgrounds');
 
-      // fetch ...
-
       function populateBackgrounds(images) {
         for (let i = 0; i < images.length; ++i) {
           let imageName = images[i].imageName;
@@ -55,7 +53,7 @@
           let radioId = `img${images[i].id}`;
 
           let imgEl = document.createElement('img');
-          imgEl.width = 240; imgEl.height = 135;
+          imgEl.width = 220; imgEl.height = 135;
           imgEl.src = imageName;
           let inputEl = document.createElement('input');
           inputEl.type = 'radio';
@@ -74,11 +72,10 @@
         }
       }
 
-      populateBackgrounds([
-        {id:1,imageName:'bg1.jpg',title:'Hanging Out'},
-        {id:2,imageName:'bg2.jpg',title:'King Kong Sloth'},
-        {id:3,imageName:'bg3.jpg',title:'Who, Me?'}
-      ]);
+      fetch('/get-backgrounds').then(res => res.json())
+      .then(function (json) {
+        populateBackgrounds(json);
+      });
     </script>
   </body>
 </html>

@@ -1,9 +1,20 @@
-
+const pg = require("pg");
 
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const helpers = require('./helpers');
+
+
+// Copied from provided Homework 6 code
+const env = require("../env.json");
+const Pool = pg.Pool;
+const pool = new Pool(env);
+pool.connect().then(function () {
+    console.log(`Connected to database ${env.database}`);
+});
+
+
 
 const app = express();
 
@@ -26,7 +37,17 @@ const storage = multer.diskStorage({
 });
 
 app.get('/get-backgrounds', (req, res) => {
-	// ...
+	pool.query(`SELECT * FROM backgrounds`).then(function (result) {
+		let json = result.rows.map(function (row) {
+			return {
+				id: row.id,
+				imageName: row.image_name,
+				title: row.title
+			}
+		});
+
+		res.send(JSON.stringify(json));
+	});
 });
 
 app.post('/upload-pictures', (req, res) => {
@@ -78,7 +99,7 @@ app.post('/upload-pictures', (req, res) => {
 			  this.c2 = document.getElementById('c2');
 			  this.ctx2 = this.c2.getContext('2d');
 			  this.back = new Image();
-			  this.back.src = "${req.body['bg-radio']}.jpg";
+			  this.back.src = "${req.body['bg-radio']}";
 			  this.c2.width = this.back.naturalWidth;
 			  this.c2.height = this.back.naturalHeight;
 			  this.c1.width = this.green.naturalWidth;
@@ -100,7 +121,7 @@ app.post('/upload-pictures', (req, res) => {
 			      frame.data[i * 4 + 3] = 0;
 			  }
 			    let canvas = document.getElementById("c2");
-			    canvas.style.backgroundImage = "url('${req.body[`bg-radio`]}.jpg')";
+			    canvas.style.backgroundImage = "url('${req.body[`bg-radio`]}')";
 			    this.ctx2.putImageData(frame, this.c2.width/2 - this.width/2, this.c2.height/2 - this.height/2);
 			    return;
 			  }  
