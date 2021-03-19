@@ -33,15 +33,8 @@
       
       <p>Premade Backgrounds: </p>
 
-      <img src="bg1.jpg" alt="sloth1" width="240" height="135">
-      <input type="radio" id="sloth1" name="bg-radio" value="bg1">
-      <label for="sloth1">Hanging Out</label><br>
-      <img src="bg2.jpg" alt="sloth2" width="240" height="135">
-      <input type="radio" id="sloth2" name="bg-radio" value="bg2">
-      <label for="sloth2">King Kong Sloth</label><br>
-      <img src="bg3.jpg" alt="sloth3" width="240" height="135">
-      <input type="radio" id="sloth3" name="bg-radio" value="bg3">
-      <label for="sloth3">Who Me?</label><br>
+      <div id="sample-backgrounds"></div>
+
 
       <p>  </p>
 
@@ -49,5 +42,43 @@
         <input type="submit" name="btn_upload_profile_pic" value="Upload" />
       </div>
     </form>
+
+    <script>
+      let backgroundsEl = document.getElementById('sample-backgrounds');
+
+      // fetch ...
+
+      function populateBackgrounds(images) {
+        for (let i = 0; i < images.length; ++i) {
+          let imageName = images[i].imageName;
+          let imageTitle = images[i].title;
+          let radioId = `img${images[i].id}`;
+
+          let imgEl = document.createElement('img');
+          imgEl.width = 240; imgEl.height = 135;
+          imgEl.src = imageName;
+          let inputEl = document.createElement('input');
+          inputEl.type = 'radio';
+          inputEl.name = 'bg-radio';
+          inputEl.value = imageName;
+          inputEl.id = radioId;
+          let labelEl = document.createElement('label');
+          labelEl.htmlFor = radioId;
+          labelEl.innerText = imageTitle;
+          let brEl = document.createElement('br');
+
+          backgroundsEl.append(imgEl);
+          backgroundsEl.append(inputEl);
+          backgroundsEl.append(labelEl);
+          backgroundsEl.append(brEl);
+        }
+      }
+
+      populateBackgrounds([
+        {id:1,imageName:'bg1.jpg',title:'Hanging Out'},
+        {id:2,imageName:'bg2.jpg',title:'King Kong Sloth'},
+        {id:3,imageName:'bg3.jpg',title:'Who, Me?'}
+      ]);
+    </script>
   </body>
 </html>
