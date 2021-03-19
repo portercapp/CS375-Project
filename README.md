@@ -26,3 +26,6 @@ replace the `password` field with your Postgres password.
 To run the server, use the command `node server.js` inside the main
 `app` folder.
 
+### Greenscreen Images:
+
+In regards to uploaded profile pictures, there are provided images that one can use as tests. These images have a certain shade of green that works best with our app. For best cases, use other images with the same shade of green as their backgrounds. Other shades of green might not work as well, needing to alter the rgb value in the code to better fit them.
