@@ -19,8 +19,8 @@
 replace the `password` field with your Postgres password.
 
 
+## Getting started:
 
-
-The image_name values should refer to files in the 'backgrounds'
-folder under the 'app' root, i.e. bg1.jpg
+To run the server, use the command `node server.js` inside the main
+`app` folder.
 
