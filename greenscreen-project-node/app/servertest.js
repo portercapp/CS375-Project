@@ -38,13 +38,29 @@ const storage = multer.diskStorage({
 
 app.get('/get-backgrounds', (req, res) => {
 	pool.query(`SELECT * FROM backgrounds`).then(function (result) {
-		let json = result.rows.map(function (row) {
-			return {
-				id: row.id,
-				imageName: row.image_name,
-				title: row.title
-			}
-		});
+		let json;
+		
+		if (result.rows.length > 0) {
+			json = result.rows.map(function (row) {
+				return {
+					id: row.id,
+					imageName: row.image_name,
+					title: row.title
+				}
+			});
+		} else {
+			json = [
+				{"id":1,"imageName":"bg1.jpg","title":"Hanging Out"},
+				{"id":2,"imageName":"bg2.jpg","title":"King Kong Sloth"},
+				{"id":3,"imageName":"bg3.jpg","title":"Who, Me?"},
+				{"id":4,"imageName":"L.jpg","title":"I am L"}
+			];
+
+			json.forEach(function (row) {
+				pool.query(`INSERT INTO backgrounds (image_name, title) VALUES ($1, $2)`,
+				[row.imageName, row.title]);
+			});
+		}
 
 		res.send(JSON.stringify(json));
 	});
